@@ -15,17 +15,16 @@ on:
         - preview
         - production
         default: 'production'
-
 env:
-HTTPS: false
-HOST: 'c2c.bomteklab.com'
-PORT: 9136
-STUN_SERVER_ENABLED: true 
-STUN_SERVER_URL: stun:stun.l.google.com:19302
-TURN_SERVER_ENABLED: true
-TURN_SERVER_URL: turn:a.relay.metered.ca:443
-TURN_SERVER_USERNAME: f576dc745a9ac363d144b422
-TURN_SERVER_CREDENTIAL: MyeRBLcqIj+6nXkh
+  HTTPS: false
+  HOST: 'c2c.bomteklab.com'
+  PORT: 9136
+  STUN_SERVER_ENABLED: true 
+  STUN_SERVER_URL: stun:stun.l.google.com:19302
+  TURN_SERVER_ENABLED: true
+  TURN_SERVER_URL: turn:a.relay.metered.ca:443
+  TURN_SERVER_USERNAME: f576dc745a9ac363d144b422
+  TURN_SERVER_CREDENTIAL: MyeRBLcqIj+6nXkh
   DEPLOYMENT_ENVIRONMENT: ${{ inputs.DEPLOYMENT_ENVIRONMENT }}
   PRODUCTION_BRANCH: main
 jobs:
