@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  # push:
+  #  branches: ["dev-v1"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      DEPLOYMENT_ENVIRONMENT:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+        - preview
+        - production
+        default: 'production'
+
+env:
+HTTPS: false
+HOST: 'c2c.bomteklab.com'
+PORT: 9136
+STUN_SERVER_ENABLED: true 
+STUN_SERVER_URL: stun:stun.l.google.com:19302
+TURN_SERVER_ENABLED: true
+TURN_SERVER_URL: turn:a.relay.metered.ca:443
+TURN_SERVER_USERNAME: f576dc745a9ac363d144b422
+TURN_SERVER_CREDENTIAL: MyeRBLcqIj+6nXkh
+  DEPLOYMENT_ENVIRONMENT: ${{ inputs.DEPLOYMENT_ENVIRONMENT }}
+  PRODUCTION_BRANCH: main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.DEPLOYMENT_ENVIRONMENT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'yarn'
+      - name: Setup
+        run: yarn setup:production
+      - name: Deploy to Cloudflare Pages [${{ inputs.DEPLOYMENT_ENVIRONMENT }}]
+        run: yarn deploy:github
